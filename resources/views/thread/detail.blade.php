@@ -25,10 +25,10 @@
             <form method="POST" action="/threads/{{ $thread->channel->slug }}/{{ $thread->id }}/reply">
                 @csrf
                 <div class="form-group">
-                    <label for="body">Reply</label>
-                    <textarea type="text" class="form-control" id="body" name="body" placeholder="Comment here..." rows='5'></textarea>
+                    <label for="body">Replies</label>
+                    <textarea type="text" class="form-control" id="body" name="body" placeholder="Comment here." rows='5'></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Reply</button>
+                <button type="submit" class="btn btn-primary">Replies</button>
             </form>
             @else
             <div>

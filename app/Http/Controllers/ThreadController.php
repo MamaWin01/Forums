@@ -33,13 +33,13 @@ class ThreadController extends Controller
             $threads = $threads->where('user_id', $user->id);
         } elseif( request('popular')) {
             $threads->getQuery()->orders = [];
-            
+
             $threads = $threads->orderBy('replies_count', 'desc');
         }
-
+        $channel = $channel->get();
         $threads = $threads->get();
 
-        return view('thread.index', compact('threads'));
+        return view('thread.index', compact('threads', 'channel'));
     }
 
     /**
@@ -61,7 +61,7 @@ class ThreadController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'channel_id' => 'required|numeric',
+            'channel_id' => 'required|exists:channels,id',
             'title' => 'required',
             'body' => 'required'
         ]);
@@ -84,7 +84,7 @@ class ThreadController extends Controller
      */
     public function show($channel, Thread $thread)
     {
-        
+
 
         return view('thread.detail', [
             'thread' => $thread,

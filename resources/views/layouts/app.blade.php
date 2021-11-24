@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Forum') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -41,6 +41,15 @@
                                 <li><a href="/threads?by={{ auth()->user()->name }}" class="nav-link">My Threads</a></li>
                                 @endif
                                 <li><a href="/threads?popular=1" class="nav-link">Popular Threads</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button">Channel<span class="caret"></span></a>
+                            <ul class="dropdown-menu ml-3">
+                                <li><a href="/threads/" class="nav-link">All Channel</a></li>
+                                    @foreach ($channel as $channels)
+                                        <li><a href="/threads/{{$channels->slug}}" class="nav-link">{{$channels->name}}</a></li>
+                                    @endforeach
                             </ul>
                         </li>
                         <li><a href="/threads/create" class="nav-link">New Thread</a></li>

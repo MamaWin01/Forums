@@ -14,7 +14,7 @@ class ReadThreadTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function a_user_can_see_thread_according_to_a_channel()
+    public function a_user_can_see_thread_according_to_channel()
     {
         $channel = create(Channel::class);
         $ThreadInChannel = create(Thread::class, ['channel_id' => $channel->id]);
@@ -26,16 +26,16 @@ class ReadThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_threads_by_any_username()
+    public function a_user_can_filter_threads_by_username()
     {
-        $this->signIn(create(User::class, ['name' => 'Kevin']));
+        $this->withExceptionHandling();
+        $this->signIn(create(User::class, ['name' => 'user']));
 
-        $threadByKevin = create(Thread::class, ['user_id' => auth()->id()]);
-        $threadNotByKevin = create(Thread::class);
-
-        $this->call('GET', '/threads', ['by' => 'Kevin'])
-            ->assertSee($threadByKevin->title)
-            ->assertDontSee($threadNotByKevin->title);
+        $threadByuser = create(Thread::class, ['user_id' => auth()->id()]);
+        $threadNotByuser = create(Thread::class);
+        $this->call('GET', '/threads', ['by' => 'user'])
+            ->assertSee($threadByuser->title)
+            ->assertDontSee($threadNotByuser->title);
     }
 
     /** @test */

@@ -24,9 +24,22 @@ class ParticipateInForumTest extends TestCase
         $thread = create(Thread::class);
 
         $reply = make(Reply::class);
-        
+
         $this->signIn()->post("/threads/$thread->channel/$thread->id/reply", $reply->toArray());
 
         $this->get("/threads/$thread->channel/$thread->id")->assertSee($reply->body);
+    }
+
+    /** @test */
+    public function a_reply_require_body()
+    {
+        $this->signIn();
+
+        $thread = create(Thread::class);
+        $reply = make(Reply::class , ['body'=> null]);
+
+        $this->signIn()->post("/threads/$thread->channel/$thread->id/reply", $reply->toArray())
+        ->assertSessionHasErrors('body');
+
     }
 }
